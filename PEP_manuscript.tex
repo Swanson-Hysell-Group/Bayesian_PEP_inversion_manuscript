@@ -1,0 +1,152 @@
+\documentclass[11pt,letterpaper]{article}
+
+%\usepackage{fontspec}
+%\usepackage[utf8]{inputenc}
+\usepackage{textcomp,marvosym}
+\usepackage{amsmath,amssymb}
+\usepackage[normalem]{ulem}
+\usepackage[left]{lineno}
+\usepackage{booktabs}
+\usepackage{changepage}
+\usepackage{rotating}
+\usepackage{color}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{xspace}
+\usepackage[hidelinks]{hyperref}
+\urlstyle{same}
+\usepackage{threeparttable}
+\doublespacing
+
+\raggedright
+\textwidth = 6.5 in
+\textheight = 8.25 in
+\oddsidemargin = 0.0 in
+\evensidemargin = 0.0 in
+\topmargin = 0.0 in
+\headheight = 0.0 in
+\headsep = 0.5 in
+\parskip = 0.1 in
+\parindent = 0.2in
+
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off,font=small]{caption}
+
+\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{Bayesian inversion for paleogeographic reconstruction}
+\rhead{\thepage}
+
+\begin{document}
+
+\begin{flushleft}
+{\Large \textbf{Bayesian inversion for paleogeographic reconstruction}}
+
+Author\textsuperscript{1},
+Author\textsuperscript{1},
+Author\textsuperscript{2},
+
+\bigskip
+\textsuperscript{1} Department of Earth and Planetary Science, University of California, Berkeley, CA, USA
+\bigskip
+
+\end{flushleft}
+
+\noindent\textit{This manuscript is in preparation for submission to Geochemistry, Geophysics, Geosystems.}
+
+\linenumbers
+
+\section*{ABSTRACT \label{sec:ABSTRACT}}
+
+Apparent polar wander paths (APWPs) synthesized from paleomagnetic poles provide the most direct data for reconstructing past paleogeography and plate motions for times earlier than $\sim$200 Ma. However, it can be difficult to develop and interpret APWPs in the presence of errors on pole positions, age uncertainties, and the lack of paleolongitude control associated with individual paleomagnetic poles. Approaches for dealing with the uncertainties and compiling paleomagnetic poles into APWPs for continental blocks include the development of running mean averages and the fitting of spherical splines to pole positions. In this contribution, we describe a new method for APW path synthesis from paleomagnetic poles. The approach extends the paleomagnetic Euler pole analysis of \citet{Gordon1984a} by placing it within the framework of a Bayesian inverse problem. This approach allows uncertainties in both pole position and age to be incorporated into the synthesis -- uncertainties that are often ignored in standard treatments. The paleomagnetic Euler poles resulting from the inversion provide estimates for the total plate motions (not just the latitudinal components) as well as their uncertainties. In addition to estimating a single Euler pole, the method allows for changepoints from one Euler pole to another to be solved for as part of the inversion. The inversion path be restricted to be a great circle therefore allowing inversion for true polar wander or true polar wander in combination with small circle paths associated with plate tectonic motion. We show several example inversions on simple synthetic data to demonstrate the capabilities of the method. We apply then apply this method to...
+
+%the Cenozoic APW path of Australia and to the
+%Mesoproterozoic Keweenawan Track of cratonic North America (Laurentia).
+
+\section*{Introduction}
+
+Plate tectonics is the motion of near-rigid blocks of lithosphere across the surface of Earth, separated by relatively narrow regions of deformation in spreading centers, transform faults, and subduction zones. The rigidity of plates means that the motion of most of Earth's surface can be described by a set of Euler poles which specify the position (in latitude and longitude) of a rotation axis and and rate of rotation about this axis for a given plate \citep[cf.][]{Cox2009a}. Individual points on a plate undergoing rigid rotation are described by small circle paths.
+
+Euler poles are widely used for describing plate motions due to their simplicity and compactness \citep[e.g.][]{DeMets2010a, Argus2011a}. Given that it takes time to build up and change torques that drive plate motions, plate motions have a tendency to remain constant, or approximately so, over millions to tens of millions of years time scales \citep{Iaffaldano2012a}. This consistency of motion can be seen physically expressed in the shape of oceanic fracture zones and in hotspot tracks across the lithosphere. These features form gently curving arcs over large portions of Earth's surface that can be well described by small circles, consistent with finite Euler rotations of the plate for an extended period of time. As such, the combination of an Euler pole plus a time interval for which it is active (often called a ``stage pole'') is a convenient description of plate motions through Earth history.
+
+As the stage pole description of plate motions is a convenient way of reconstructing plate tectonic history, it is widely used in both continental reconstruction \citep[e.g.][]{Boyden2011a} and in geodynamical modeling \citep[e.g.][]{Mcnamara2005a, Bull2014a}. Most reconstructions of plate motions over the past 200 million years rely heavily on fitting Euler pole rotations to oceanic fracture zones, hotspot tracks, seafloor magnetic isochrons, and, to a lesser extent, paleomagnetic data \citep{Muller1993a, Seton2012a}. However, as we look further back in Earth history, many of the records on which these plate tectonic reconstructions rely largely disappear due to the  subduction of oceanic lithosphere. Given the lack of ocean crust older than $\sim$200 Ma, the paleomagnetic record from continental rocks is the dominant remaining evidence. These paleomagnetic data can be used in conjunction with geological data that provides information on the tectonic setting of plate margins, as well as additional information such as the correlation of geologic terranes, to develop paleogeographic reconstructions.
+
+It is more challenging to reconstruct past plate motions from the paleomagnetic record than from data derived from oceanic lithosphere for a number of reasons, including: (1) the data are often sparser; (2) traditional paleomagnetic analysis constrains paleolatitude and the orientation of a continental block, but does not constrain paleolongitude without additional assumptions; and (3) some paleomagnetic poles have poor age control.
+
+\citet{Gordon1984a} noted that apparent polar wander paths (APWPs) have arcing trajectories similar to fracture zones and hotspot tracks, which is to be expected if similar tectonic processes are responsible for creating them. They therefore suggested fitting small circles to paleomagnetic poles tracks, which would furnish Euler poles for the plate in question for that time period. This approach for constraining APWPs, called paleomagnetic Euler pole (PEP) analysis, has the attractive feature of providing a complete description of the plate motion, including paleolongitudinal changes and speeds.  However, it has the drawback of being somewhat difficult to estimate, not providing readily computed uncertainties in the fit, and not incorporating age uncertainties. With a some notable exceptions \citep[e.g.][]{Bryan1986a, Beck1989a, Tarling1996a,  Beck2003a, Smirnov2010a}, PEP analysis has not seen wide adoption.
+
+In this contribution, we extend paleomagnetic Euler pole (PEP) analysis by placing it within a Bayesian statistical framework, and demonstrate how to invert for PEPs using Markov Chain Monte Carlo (MCMC) methods. This framework has the advantage of naturally incorporating uncertainties in paleomagnetic pole positions, as well as widely disparate age uncertainties associated with individual paleomagnetic poles. The resulting stage poles from these inversions are not a single answer, but are instead a distribution of possible answers, furnishing uncertainties as part of the solution process. \citet{Iaffaldano2012a} employed a similar Bayesian approach to inversions for finite plate rotations. They used seafloor data to reconstruct India's Cenozoic convergence with Asia, incorporating uncertainties into the inversion. In the process, they demonstrated that interpretations of changes in plate motions on timescales $<$1 Myr are the result of overfitting of such data such that they are fewer kinematic changes and longer stability in plate motions than previous treatments.
+
+In this contribution, we first review different approaches that have been applied to synthesize and interpret APWPs. We then describe the formalism of Bayesian inversions and Markov Chain Monte Carlo methods that we will apply. We then describe the statistical model which we will be inverting and demonstrate the inversion of several synthetic data sets. We then show examples where we apply the method to paleomagnetic poles in order to develop estimates of paleomagnetic Euler pole positions and obtain estimates of plate velocity.
+
+\section*{Interpretation of apparent polar wander paths}
+
+A sequence of paleomagnetic poles from the same continental block can be synthesized into an APWP, which can then be used to develop plate tectonic reconstructions and models of plate speeds through time. Interpretation of these paths becomes difficult in the case of limited, uncertain, or conflicting data, and when the age of paleomagnetic poles are poorly known. A number of approaches to dealing with uncertainty in APWPs have been developed, which we briefly review here.
+
+\subsection*{Latitudinal drift}
+Due to the rotational symmetry of Earth's time-averaged geocentric axial dipole magnetic field, paleomagnetic poles do not directly constrain the absolute paleolongitude of a lithospheric block \citep{Butler1992a}. The simplest analysis of an APW path is thus to compare the paleolatitudes implied by successive poles for a point on a respective block. The difference in paleolatitudes gives a minimum angular distance over which the block has traveled.  When this distance is compared to the age difference between the poles, such a comparison establishes a rate of latitudinal motion.
+
+It is possible to estimate confidence bounds on the rate of latitudinal drift through bootstrap resampling \citep[e.g.][]{Tarduno1990b} or by taking a Monte Carlo approach. \citet{Swanson-Hysell2014b} developed a Monte Carlo sampling method and applied the method to a pair of poles from the Proterozoic Midcontinent Rift of North America to estimate the range of implied latitudinal drift. They also sampled from the uncertainties of radiometric dates associated with the poles, assuming Gaussian distributions, in order to incorporate age uncertainties into the analysis. With samples of pole position and ages, they were able to estimate the 95\% confidence estimates on the rate of latitudinal drift.
+
+Whether using point estimates of the latitudinal drift rate or using Monte Carlo estimates, the latitudinal drift interpretation of APWPs remains limited as it represents a minimum estimate. It does not resolve longitudinal drift rate, nor does it naturally extend to APWPs with more than two poles, especially if two coeval poles are not in agreement, as it requires the selection of pole pairs.
+
+\subsection*{Spherical splines}
+When considering APWPs with many poles, it becomes more difficult to perform latitudinal comparisons between pairs of poles. It is not always clear which pairs of poles to compare in cases where there are many overlapping paleomagnetic poles, that have variable uncertainities associated with their position and age.
+
+One approach to synthesize such data is to fit a spline through the set of paleomagnetic poles, constraining the path to lie on the surface of a sphere.
+This approach was pioneered by \citet{Torsvik1992a} using the spherical spline algorithm developed by \citet{Jupp1987a}. This approach has the advantage of allowing the weighting of the data by their uncertainties. The uncertainty assigned to a paleomagnetic pole can be the 95\% confidence interval on the pole, but it can also be augmented by various quality screening factors, such as the quality (``Q'') factor of \citet{Van-der-Voo1990a} \citep{Torsvik1992a}. Even with the weighting of the paleomagnetic poles by uncertainty there can be unrealistic loops in the APW path generated by the spline fit. To combat this, the spline can also be computed under tension, penalizing curvature and producing a smoother path \citep{Torsvik1996a}.
+
+The spherical spline approach to interpreting APW paths has several attractive features. It produces a smooth path through the data that can incorporate spatial uncertainties in the data, and may be efficiently computed. However, it does have some drawbacks. It is not easy to determine the appropriate uncertainty weighting and spline tension parameters for the fit, and what effect those choices have on the result. Furthermore, the resulting fit does not have an uncertainty with a physically interpretable meaning \citep{Torsvik1996a}. It also does not have a simple way of incorporating age uncertainties of the paleomagnetic poles. Finally, by their very nature, splines cannot represent the sharp hairpin cusps that characterize abrupt shifts in motion that plates sometimes undergo \citep{Irving1972a, Gordon1984a}.
+
+\subsection*{Running means}
+
+An alternative method for developing APW paths is to perform a running Fisher
+mean on the poles with a moving window \citep{Irving1977a, Van-der-Voo2001a, Torsvik2008a}. In such an analysis, paleomagnetic poles in a compilation are averaged in defined steps (typically 5-10 Myr) with a defined window duration (typically 10-30 Myr). Like spherical splines, the running mean approach has the ability to effectively damp the effect of outlier poles that could lead to spurious motion in the APW path if there are sufficient data. The duration of the moving window controls the amount of smoothing. Furthermore, this moving window method enforces an age progression in the averaged poles. \citet{Torsvik2008a} also investigated the effects of combining running means with spherical splines, by first computing a set of mean poles and then fitting a spline through those means. 
+The simplicity of using the running mean approach to develop an APWP, as well as its ability to suppress potentially spurious poles, has led to it being widely adopted.
+
+The running mean approach shares many of the drawbacks of the spline approach.  It is not obvious how to best choose the window duration, and different window durations are likely appropriate for different data sets.  It is also unclear how to interpret the resulting uncertainties in the path that are reported as the Fisher $A_{95}$ ellipse of the mean of the poles. This approach, along with the spherical spline method, does not easily incorporate age uncertainties in the poles, nor the uncertainty in pole positions.
+
+\subsection{Paleomagnetic Euler poles}
+Paleomagnetic Euler poles (PEP), also known as the ``small circle'' method, were first described by \citet{gordon1984paleomagnetic}.
+The model rests in recognizing that plate motions are well described by finite
+rotations around Euler poles which are approximately steady for millions or 
+tens of millions of years. As a result, the APW path of the plate
+can also be described by Euler rotations, which
+produce small circles on Earth's surface.
+
+By fitting a sequence of Euler poles to a small circle path, one specifies
+the position of the Euler pole which produces that circle.
+PEP analysis has the feature that it closely conforms to our model for how plates move.
+Since it specifies the Euler pole which produces a given small circle,
+this allows for an estimate of the full motion of a given plate, 
+as well as the total plate speed (instead of just the latitudinal component of the speed).
+
+On the other hand, PEP analysis has many of the same
+deficiencies that spline fits and running means have: it is not easy to compute
+uncertainties, especially in the presence of unknown ages of poles.
+Furthermore, one has the additional challenge and related uncertainty of deciding how many PEPs to
+include for a given sequence of paleomagnetic poles.
+In the following sections, we develop a Bayesian statistical approach to
+PEP analysis which attempts to address some these deficiencies.
+
+% \begin{figure}[h!]
+% \begin{center}
+% 	\includegraphics[width=0.9\textwidth]{./Figures/Continent_Areas.pdf}
+% 	\caption{\textbf{A)} Total continental area through time. In the paleogeographic model used in this study, tectonic units \citep{Torsvik2016a} are progressively added to the model, leading to a net increase in total continental area in the model of $\sim$33\% over the Phanerozoic. However, estimates of continental crust growth (e.g. \citealp{Pujol2013a}) suggest that continental area was roughly constant through the Phanerozoic. We therefore normalize the total continental area curve in our model by assuming a fixed continental area through the Phanerozoic. \textbf{B)} Tropical continental area through time. We normalize the tropical continental area curve using the normalization ratio implied in (A). \textbf{C)} Contour plot showing the latitudinal distribution of continental area. \textbf{D)} Latitudinal extent of land ice away from the poles \citep{Macdonald2019a}.}
+% 	\label{fig:Continent_Areas}
+% \end{center}
+% \end{figure}
+
+\clearpage
+\newpage
+\footnotesize
+
+\singlespacing
+
+\bibliographystyle{gsabull}
+\bibliography{allrefs}
+
+\end{document}
