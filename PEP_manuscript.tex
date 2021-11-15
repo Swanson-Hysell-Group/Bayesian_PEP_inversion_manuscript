@@ -19,7 +19,9 @@
 \usepackage[hidelinks]{hyperref}
 \urlstyle{same}
 \usepackage{threeparttable}
-\doublespacing
+%\doublespacing
+
+\newcommand{\mitbf}[1]{\hbox{\mathversion{bold}$#1$}}
 
 \raggedright
 \textwidth = 6.5 in
@@ -45,9 +47,9 @@
 \begin{flushleft}
 {\Large \textbf{Bayesian inversion for paleogeographic reconstruction}}
 
-Ian R. Rose \textsuperscript{1},
-Yiming Zhang \textsuperscript{1},
-Nicholas L. Swanson-Hysell \textsuperscript{1}\textsuperscript{*}
+Ian R. Rose\textsuperscript{1},
+Yiming Zhang\textsuperscript{1},
+Nicholas L. Swanson-Hysell\textsuperscript{1}\textsuperscript{*}
 
 \bigskip
 \textsuperscript{1} Department of Earth and Planetary Science, University of California, Berkeley, CA, USA\\
@@ -181,8 +183,8 @@ see \citet{Fisher1987a}. Plots of the following distributions, as well as sample
 
 \subsubsection*{Uniform distribution}
 \begin{figure*}
-\includegraphics[width=0.9\textwidth]{figures/cartoon/distributions.pdf}
-\caption[Spherical probability distributions.]{Probability densities for distributions of directional data, as well as samples drawn from them. All are plotted using an orthographic projection. (a) Uniform distribution. (b) Fisher distribution. The center of the distribution is at $30^\circ$N, $30^\circ$E, with concentration parameter of $\kappa=20$. (c) Watson girdle distribution. The pole of symmetry is at $70^\circ$N, $90^\circ$E, with a concentration parameter of $\kappa=-5$.}
+\includegraphics[width=\textwidth]{fig_direction_distributions.png}
+\caption[Spherical probability distributions.]{Probability densities for distributions of directional data, as well as samples drawn from them. All distributions are plotted using an orthographic projection. (left panel) Uniform distribution. (middle panel) Fisher distribution. The center of the distribution is at $40^\circ$N, $30^\circ$E, with concentration parameter of $\kappa=50$. (c) Watson girdle distribution. The pole of symmetry is at $30^\circ$N, $30^\circ$E, with a concentration parameter of $\kappa=-25$.}
 \label{fig:distributions}
 \end{figure*}
 
