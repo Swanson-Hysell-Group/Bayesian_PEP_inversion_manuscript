@@ -15,6 +15,7 @@
 \usepackage{array}
 \usepackage{fancyhdr}
 \usepackage{graphicx}
+\usepackage{sidecap}
 \usepackage{xspace}
 \usepackage[hidelinks]{hyperref}
 \urlstyle{same}
@@ -120,6 +121,12 @@ The running mean approach shares many of the drawbacks of the spline approach.  
 
 \subsection*{Paleomagnetic Euler poles}
 The idea of fitting small circles to paleomagnetic data to gain insight into plate motions was first described by \citet{Francheteau1969a}. The center of such a circle on a sphere is the pole of rotation which was termed a paleomagnetic euler pole (PEP) by \citet{Gordon1984a} who developed a method to invert for the position of such poles. The approach builds on the recognition that plate motions are well described by finite rotations around Euler poles which are approximately steady for millions or tens of millions of years. As a result, the APWP of a plate can be described by Euler rotations, which produce small circle paths on Earth's surface. As a result, PEP analysis conforms to the general model of the movement of tectonic plates. Since the analysis solves for the Euler pole that produces a given small circle, this approach allows for an estimate of the full motion of a given plate, including the total plate speed (instead of just the latitudinal component of the speed). Effectively, the analysis utilizes both the change in plate orientation and latitude embedded within paleomagnetic poles to estimate both latitudinal and longitudinal motion as succinctly summarized by an Euler pole.
+
+\begin{SCfigure}
+\includegraphics[width=0.5\textwidth]{fig_paleomagnetic_euler_pole.png}
+\caption{Conceptual model for a paleomagnetic Euler pole. A finite rotation of the plate around an Euler pole (red circle) results in arcuate oceanic fracture zones and hotspot tracks which describe small circles on the globe. The same finite rotation produces a small circle in the APW path, which is illustrated by blue paleomagnetic poles. By fitting a small circle to the APW path we may recover the Euler pole that produced the rotation. Adapted from \citet{Gordon1984a}}
+\label{fig:pep}
+\end{SCfigure}
 
 However, PEP analysis has many of the same deficiencies that spline fits and running means have: it is not easy to compute uncertainties, especially in the presence of unknown ages of poles. Furthermore, one has the additional challenge and related uncertainty of deciding how many PEPs to include for a given sequence of paleomagnetic poles. In this contribution, we develop a Bayesian statistical approach to PEP analysis which attempts to address some of these deficiencies.
 
