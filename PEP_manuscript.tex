@@ -413,7 +413,28 @@ This angle is equivalent to a 2$\sigma$ uncertainty in Gaussian statistics. Impl
 
 An impetus for the development of this Bayesian paleomagnetic Euler pole inversion method was in order to constrain the absolute rates of plate motion associated with the ca. 1109 to 1070 Ma Keweenawan Track of paleomagnetic poles \citep{Swanson-Hysell2019a}. These poles are associated with the rapid motion of Laurentia towards the equator leading up to the Grenvillian orogeny and the assembly of the supercontinent Rodinia \citep{Swanson-Hysell2021a}. While previous approaches had established estimates for the rate of latitudinal motion associated with the Keweenawan Track \citep{Davis1997a, Swanson-Hysell2014b}, we implemented this method in \citet{Swanson-Hysell2019a} in order to constrain absolute rates (without providing details on the methodology that are elucidated in the present contribution). In addition to our goals of constraining absolute rates, this approach was particularly appropriate for the Keweenawan Track as it includes poles with quite disparate precisions on their age constraints as some are constrained tightly by high-precision U-Pb dates \citep[e.g.]{Fairchild2017a} while others have looser radiometric constraints. A technical note related to the analysis in \citet{Swanson-Hysell2019a} is that it used a version of the code written in PyMC2 (\citealp{}; \url{https://github.com/ian-r-rose/mcplates}). The PyMC project has migrated to PyMC3 which is a total rewrite of the code \citep{Salvatier2016a} and necessitated our code to refactored into its present version (\url{https://github.com/Swanson-Hysell-Group/Bayesian_PEP_inversion}). 
 
-Applying a single Euler pole inversion to the entirety of the Keweenawan Track results in a median rate of 30 cm/yr with a 95$\%$ credible interval of 27–34 cm/yr. 
+\begin{figure*}
+\includegraphics[width=0.7\textwidth]{fig_Keweenawan_Track.pdf}
+\caption{A) Bayesian PEP inversion of the Keweenawan Track using three different approaches. The Euler pole locations and representative resulting tracks are shown with the paleomagnetic poles. The distribution of plate speed associated with each inverted Euler pole is shown in the histograms with the 95$\%$ credible interval indicated with dashed lines}
+\label{fig:Keweenawan_Track}
+\end{figure*}
+
+%Inversion of the Keweenawan track for a single Euler rotation using the Bayes- ian framework discussed in the text. (A) Euler pole locations developed through the inversion shown as a density plot along with a representative resulting tracks drawn over the paleo- magnetic poles. (B) Paleomag- netic pole positions for draws from the posterior distribution of the inversion superimposed on observed pole positions and their uncertainty. (C) Laurentia plate speed distribution from the inversions. The solid line shows the median plate speed (31 cm/yr) and the dashed lines show the 95% credible interval (27–34 cm/yr). (D) Prior prob- ability distributions for the ages of the paleomagnetic poles. Poles with radiometric ages are given Gaussian prior distribu- tions. Poles with stratigraphic age control are given uniform prior distributions between bracketing ages. (E) Posterior probability distributions for the ages of the poles resulting from the inversion. Inversion of the Keweenawan Track using four different models. Euler pole lo- cations and sample tracks are shown for each inversion as are the paleomagnetic pole posi- tions resulting from the inver- sion superimposed on observed pole positions (same color scheme as in Fig. 10). The dis- tribution of plate speeds attrib- utable to each inverted Euler pole are shown in histograms with the 95% credible interval indicated with dashed lines for each model.
+
+Applying a single PEP inversion to the entirety of the Keweenawan Track results in a median rate of 30 cm/yr with a 95$\%$ credible interval of 27–34 cm/yr. The fit with a single PEP is shown in Figure~\ref{fig:keweenawan_paths_1}.
+% The posterior distribution of the Euler pole position is shown in in blue,
+% and a sampling of the small-circle paths generated from the posterior distribution are plotted over the paleomagnetic poles.
+% Figure~\ref{fig:keweenawan_speeds_1}(c) and~\ref{fig:keweenawan_speeds_1}(d) show the prior and posterior distributions for the ages of the poles,
+% and Figure~\ref{fig:keweenawan_speeds_1}(a) shows the posterior distribution of the plate speed for Laurentia,
+% calculated with respect to Duluth, MN (46.8$^\circ$N, 92.1$^\circ$W).
+% The median plate speed for the one-Euler pole inversion is 26.5 cm/yr, with a 95\% credible interval of 23.1-30.4 cm/yr.
+
+
+
+These rates are significantly faster than the fastest Cenozoic plate speeds \citep{Zahirovic2015a}.
+
+
+
 
 If the path is to be explained by a single Euler pole these inversions reveal that motion of the continent exceeded 27 cm/yr. The path is particularly well-explained by a model wherein there is continuous true polar wander in addition to rapid plate motion that changes direction and slows ca. 1096 Ma.
 
@@ -484,13 +505,7 @@ In the literature, the Keweenawan Track has variably be interpreted as being the
 % We interpret this as meaning that three PEPs is unnecessary given the data. Therefore we focus
 % on the results with one and two PEPs.
 
-% The fit with a single PEP is shown in Figure~\ref{fig:keweenawan_paths_1}.
-% The posterior distribution of the Euler pole position is shown in in blue,
-% and a sampling of the small-circle paths generated from the posterior distribution are plotted over the paleomagnetic poles.
-% Figure~\ref{fig:keweenawan_speeds_1}(c) and~\ref{fig:keweenawan_speeds_1}(d) show the prior and posterior distributions for the ages of the poles,
-% and Figure~\ref{fig:keweenawan_speeds_1}(a) shows the posterior distribution of the plate speed for Laurentia,
-% calculated with respect to Duluth, MN (46.8$^\circ$N, 92.1$^\circ$W).
-% The median plate speed for the one-Euler pole inversion is 26.5 cm/yr, with a 95\% credible interval of 23.1-30.4 cm/yr.
+
 
 % The fit with two PEPs is shown in Figure~\ref{fig:keweenawan_paths_2}.
 % The posterior distribution of the position for the first Euler pole is shown in blue,
