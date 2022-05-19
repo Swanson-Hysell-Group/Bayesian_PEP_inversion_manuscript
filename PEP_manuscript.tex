@@ -1,6 +1,6 @@
 %% TO DO %%
 % Make points about relative vs absolute motion as pertains to stability of a single Euler in the new section Challenges and opportunities in the application of paleomagnetic Euler pole analysis
-% Update figure and text to include other plate motion models with different solid Earth to spin axis reference frames
+% Update interpretation text related to comparison to TC2017 Say that introducing the TPW rotation enables the implied pole position from the model to match the longitude position. However, introducing that rotation slows the latitudinal different rate such that it is not as good of a match with the data and inversion.
 
 
 
@@ -190,7 +190,7 @@ choices of probability distributions that have less probability density in regio
 
 It is usually impossible to calculate the posterior probability distribution in Equation~\eqref{eq:bayes} directly \citep{Davidson-Pilon2015a}.  It is much more tractable to generate a Markov chain which, upon convergence, generates samples from the desired posterior \citep{Gelman2013a}. This approach defines a class of methods known as Markov chain Monte Carlo (MCMC) methods.
 
-The literature on MCMC methods is extensive and we do not review it here, but references the interested reader could refer to for further introduction include \cite{Gelman1996a}, \cite{Sambridge2013a}, and \cite{Davidson-Pilon2015a}. A number of high-quality open source software packages for implementing MCMC models exist, including WinBUGS \citep{Lunn2000a}, PyMC3 \citep{Salvatier2016a}, and Stan \citep{Carpenter2017a}. We make extensive use of PyMC3 in this work.
+The literature on MCMC methods is extensive and we do not review it here, but references the interested reader could refer to for further introduction include \cite{Gelman1996a}, \cite{Sambridge2013a}, and \cite{Davidson-Pilon2015a}. A number of high-quality open source software packages for implementing MCMC models exist, including WinBUGS \citep{Lunn2000a}, PyMC3 \citep{Salvatier2016a}, and Stan \citep{Carpenter2017a}. We make extensive use of PyMC3 in this work. 
 
 \subsection*{Distributions on a sphere}
 
@@ -251,13 +251,11 @@ where ${}_1 F_1()$ is Kummer's confluent hypergeometric function, which is avail
 \label{sec:model}
 \subsection*{Forward model}
 \label{sec:forward_model}
-A forward model describes how we generate predicted observations given a set of model parameters (Equation~\eqref{eq:forward}). The forward model for paleomagnetic Euler pole analysis in this study is essentially unchanged from that of \cite{Gordon1984a}. We describe plate motions (and hence paleomagnetic pole motions) with a series of Euler poles. Each Euler pole has three parameters: a latitude, a longitude, and a rotation rate.
+A forward model describes how we generate predicted observations given a set of model parameters (Equation~\eqref{eq:forward}). The forward model for paleomagnetic Euler pole analysis in this study is essentially unchanged from that of \cite{Gordon1984a}. There are in general three scenarios of modeling plate motions (and hence paleomagnetic pole motions). A first scenario considers that the progression of a series of paleomagnetic poles to be the sole result of true polar wander along a great-circle path. In such a model, three parameters exist: a latitude, a longitude and a rotation rate for which true polar wander happens. A second scenario concerns that an APWP is a result of multiple stages of small-circle rotations about a series of Euler poles. Each Euler pole has three parameters: a latitude, a longitude, and a rotation rate. In a model with multiple Euler poles, we also must specify the ages where one Euler pole switches to the next (the cusps, or ``hairpins'' of \cite{Irving1972a}). In the context of parameter inversion, these ages are often known as ``changepoints.'' Although these changepoints need to be defined to happen abruptly in time, the change in the trajectory of the apparent polar wander path can be either sharp or gradual. In a third scenario, a combination of multiple Euler pole rotations and true polar wander may be used to model paleomagnetic pole paths. 
 
-In a model with multiple Euler poles, we also must specify the ages where one Euler pole switches to the next (the cusps, or ``hairpins'' of \cite{Irving1972a}). In the context of parameter inversion, these ages are often known as ``changepoints.''
+In addition to rotational axes and rates, we also need initiate a model with a starting position on the globe, which, in practice, can be sampled from the Fisher distribution of the oldest paleomagnetic pole in the data set. The starting point contributes two parameters (a latitude and a longitude). 
 
-Finally, we need a starting position on the globe, which, in practice, can be sampled from the Fisher distribution of the oldest paleomagnetic pole in the data set. The starting point contributes two parameters (a latitude and a longitude).
-
-Therefore, a model with $n_e$ Euler rotations will have $3 n_e$ parameters for the poles, $(n_e-1)$ parameters for the changepoints, and 2 parameters for the starting location. The number parameters for which we are inverting is then given by
+Therefore, a model only inverting for true polar wander rotation will have 3 parameters (longitude and latitude of the rotation axis and rate of the rotation). A model with $n_e$ Euler rotations will have $3 n_e$ parameters for the poles, $(n_e-1)$ parameters for the changepoints, and 2 parameters for the starting location. The number parameters for which we are inverting is then given by
 \begin{equation}
 \begin{aligned}
 N &= 3 n_e + (n_e -1) + 2 \\
@@ -265,6 +263,8 @@ N &= 3 n_e + (n_e -1) + 2 \\
 \end{aligned}
 \label{eq:n_parameters}
 \end{equation}
+
+Two additional parameters will be included in a model where true polar wander is considered to happen on top of $n_e$ Euler rotations. The reason for there being only two additional parameters is because in such cases, the axis of true polar wander is not independently defined, but is constrained to be on a great circle that is orthogonal to the vector representing the starting pole position. Therefore, a total of $4 n_e + 3$ parameters are inverted for. 
 
 For each Euler pole, $\mitbf{\omega}_i$ the velocity $\mathbf{v}$ of a point $\mathbf{p}$ on the surface of the globe is given by
 \begin{equation}
@@ -340,11 +340,16 @@ a_j \sim U(a_\mathrm{young}, a_\mathrm{old}),
 \end{equation}
 where $a_\mathrm{young}$ and $a_\mathrm{old}$ are the ages of the lower and upper age constraints, respectively.
 
+\textbf{True polar wander:}
+Another advantage of this method is the ability to also incorporate a component of true polar wander rotation on top of Euler pole rotations. Because true polar wander represents the rotation of the entire solid Earth with respect to the spin axis, an APWP that is solely consisted of true polar wander should always follow a great circle trajectory and the associated rotation axis should be orthogonal to the great circle. In a case where both small circle rotations and true polar wander are recorded by an APWP, the true polar wander rotation axis is constrained to be 90 degree away from the start position of the path and the rotation rate can be defined in a similar fashion as that of the Euler pole magnitudes.
+
+
 To summarize our choices for prior distributions:
 \begin{itemize}
 \item Euler pole positions: spherical uniform distribution, or a Watson girdle distribution with $\kappa_W \approx -0.8$.
 \item Euler pole magnitudes: Uniform distribution between 0$^\circ$ and 4$^\circ$/Myr, or an exponential distribution with $\lambda \approx 2.5$ or $\lambda \approx 1$.
 \item Changepoints: uniform distribution between $a_\mathrm{min}$ and $a_\mathrm{max}$.
+\item Starting position: Fisher distribution usually defined by the Fisher statistics of the oldest paleomagnetic pole position in an APWP.
 \item Paleomagnetic pole ages: normal or uniform distribution, depending on the type of age control for the geologic unit from which the pole was obtained.
 \end{itemize}
 
@@ -455,6 +460,20 @@ The inverted APWPs correspond well with the pole path from the \cite{Muller2016a
 \label{sec:keweenawan}
 
 An impetus for the development of this Bayesian paleomagnetic Euler pole inversion method was to constrain the absolute rates of plate motion associated with the ca. 1109 to 1070 Ma Keweenawan Track of paleomagnetic poles \citep{Halls1981a, Swanson-Hysell2009a, Swanson-Hysell2019a}. These poles are associated with the rapid motion of Laurentia towards the equator leading up to the Grenvillian orogeny and the assembly of the supercontinent Rodinia \citep{Swanson-Hysell2021a}. While previous approaches had established estimates for the rate of latitudinal motion associated with the Keweenawan Track \citep{Davis1997a, Swanson-Hysell2014b}, we implemented this Bayesian inversion method in \cite{Swanson-Hysell2019a} in order to constrain absolute rates (without providing the level of detail on the methodology that is elucidated in the present contribution). In addition to our goals of constraining absolute rates, this approach was particularly appropriate for the Keweenawan Track as it includes poles with quite disparate precision on their age constraints as some are constrained tightly by high-precision U-Pb dates \citep[e.g.][]{Fairchild2017a} while others have looser stratigraphic constraints. A technical note related to the analysis in \cite{Swanson-Hysell2019a} is that it used a version of the code written in PyMC2 (\citealp{Patil2010a}; \url{https://github.com/ian-r-rose/mcplates}). The PyMC project has migrated to PyMC3 which is a total rewrite of the module \citep{Salvatier2016a} and necessitated our code to refactored into its present PyMC3 version (\url{https://github.com/Swanson-Hysell-Group/Bayesian_PEP_inversion}). These two versions of the code apply the same methodology and recover very similar solutions.
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.7\textwidth]{fig_Keweenawan_Track.pdf}
+\caption{A) Bayesian paleomagnetic Euler pole inversion of the Keweenawan Track using three different combinations of Euler poles. The Euler pole locations and representative resulting tracks along with modeled pole positions are shown with the paleomagnetic poles. The distribution of plate speed associated with each inverted Euler pole is shown in the histograms with the 95$\%$ credible interval indicated with dashed lines. B) The upper plot illustrates the prior probability distributions for the ages of the paleomagnetic poles used in the inversion. Poles with radiometric ages are assigned Gaussian distributions while those with stratigraphic age control are assigned uniform distributions between bracketing ages. The posterior probability of poles ages resulting from the one plate tectonic Euler pole inversion are shown in the lower panel. See \cite{Swanson-Hysell2019a} for details on individual paleomagnetic poles.}
+\label{fig:Keweenawan_Track}
+\end{figure*}
+
+\begin{figure*}
+\centering
+\includegraphics[width=0.7\textwidth]{fig_Keweenawan_Track.pdf}
+\caption{A) Bayesian paleomagnetic Euler pole inversion of the Keweenawan Track using three different combinations of Euler poles. The Euler pole locations and representative resulting tracks along with modeled pole positions are shown with the paleomagnetic poles. The distribution of plate speed associated with each inverted Euler pole is shown in the histograms with the 95$\%$ credible interval indicated with dashed lines. B) The upper plot illustrates the prior probability distributions for the ages of the paleomagnetic poles used in the inversion. Poles with radiometric ages are assigned Gaussian distributions while those with stratigraphic age control are assigned uniform distributions between bracketing ages. The posterior probability of poles ages resulting from the one plate tectonic Euler pole inversion are shown in the lower panel. See \cite{Swanson-Hysell2019a} for details on individual paleomagnetic poles.}
+\label{fig:Keweenawan_Track}
+\end{figure*}
 
 \begin{figure*}
 \centering
