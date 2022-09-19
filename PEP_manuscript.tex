@@ -1,19 +1,3 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% AGUJournalTemplate.tex: this template file is for articles formatted with LaTeX
-%
-% This file includes commands and instructions
-% given in the order necessary to produce a final output that will
-% satisfy AGU requirements, including customized APA reference formatting.
-%
-% You may copy this file and give it your
-% article name, and enter your text.
-%
-%
-% Step 1: Set the \documentclass
-%
-%
-
-%% To submit your paper:
 \documentclass[]{agujournal2019}
 \usepackage{url} %this package should fix any errors with URLs in refs.
 \usepackage{lineno}
@@ -21,120 +5,21 @@
 \usepackage{soul}
 \usepackage{amsmath}
 \linenumbers
-%%%%%%%
-% As of 2018 we recommend use of the TrackChanges package to mark revisions.
-% The trackchanges package adds five new LaTeX commands:
-%
-%  \note[editor]{The note}
-%  \annote[editor]{Text to annotate}{The note}
-%  \add[editor]{Text to add}
-%  \remove[editor]{Text to remove}
-%  \change[editor]{Text to remove}{Text to add}
-%
-% complete documentation is here: http://trackchanges.sourceforge.net/
-%%%%%%%
 
 \draftfalse
 
-%% Enter journal name below.
-%% Choose from this list of Journals:
-%
-% JGR: Atmospheres
-% JGR: Biogeosciences
-% JGR: Earth Surface
-% JGR: Oceans
-% JGR: Planets
-% JGR: Solid Earth
-% JGR: Space Physics
-% Global Biogeochemical Cycles
-% Geophysical Research Letters
-% Paleoceanography and Paleoclimatology
-% Radio Science
-% Reviews of Geophysics
-% Tectonics
-% Space Weather
-% Water Resources Research
-% Geochemistry, Geophysics, Geosystems
-% Journal of Advances in Modeling Earth Systems (JAMES)
-% Earth's Future
-% Earth and Space Science
-% Geohealth
-%
-% ie, \journalname{Water Resources Research}
-
 \journalname{JGR: Solid Earth}
-
 
 \begin{document}
 
-%% ------------------------------------------------------------------------ %%
-%  Title
-%
-% (A title should be specific, informative, and brief. Use
-% abbreviations only if they are defined in the abstract. Titles that
-% start with general keywords then specific terms are optimized in
-% searches)
-%
-%% ------------------------------------------------------------------------ %%
-
-% Example: \title{This is a test title}
-
 \title{Bayesian paleomagnetic Euler pole inversion for paleogeographic reconstruction and analysis}
-
-%% ------------------------------------------------------------------------ %%
-%
-%  AUTHORS AND AFFILIATIONS
-%
-%% ------------------------------------------------------------------------ %%
-
-% Authors are individuals who have significantly contributed to the
-% research and preparation of the article. Group authors are allowed, if
-% each author in the group is separately identified in an appendix.)
-
-% List authors by first name or initial followed by last name and
-% separated by commas. Use \affil{} to number affiliations, and
-% \thanks{} for author notes.
-% Additional author notes should be indicated with \thanks{} (for
-% example, for current addresses).
-
-% Example: \authors{A. B. Author\affil{1}\thanks{Current address, Antartica}, B. C. Author\affil{2,3}, and D. E.
-% Author\affil{3,4}\thanks{Also funded by Monsanto.}}
 
 \authors{Ian R. Rose\affil{1}, Yiming Zhang\affil{1}, and Nicholas L. Swanson-Hysell\affil{1}}
 
 
  \affiliation{1}{Department of Earth and Planetary Science, University of California, Berkeley, CA, USA}
-% \affiliation{2}{Second Affiliation}
-% \affiliation{3}{Third Affiliation}
-% \affiliation{4}{Fourth Affiliation}
-
-%\affiliation{=number=}{=Affiliation Address=}
-%(repeat as many times as is necessary)
-
-%% Corresponding Author:
-% Corresponding author mailing address and e-mail address:
-
-% (include name and email addresses of the corresponding author.  More
-% than one corresponding author is allowed in this LaTeX file and for
-% publication; but only one corresponding author is allowed in our
-% editorial system.)
-
-% Example: \correspondingauthor{First and Last Name}{email@address.edu}
 
 \correspondingauthor{Nicholas L. Swanson-Hysell}{swanson-hysell@berkeley.edu}
-
-%% Keypoints, final entry on title page.
-
-%  List up to three key points (at least one is required)
-%  Key Points summarize the main points and conclusions of the article
-%  Each must be 140 characters or fewer with no special characters or punctuation and must be complete sentences
-
-% Example:
-% \begin{keypoints}
-% \item	List up to three key points (at least one is required)
-% \item	Key Points summarize the main points and conclusions of the article
-% \item	Each must be 140 characters or fewer with no special characters or punctuation and must be complete sentences
-% \end{keypoints}
 
 \begin{keypoints}
 \item Paleomagnetic Euler pole analysis can be implemented as a Bayesian inverse problem that incorporates uncertainty on pole positions and ages
@@ -142,41 +27,13 @@
 \item Applying this method to Australia paleomagnetic data yields plate motions that are consistent with those from independent plate models
 \end{keypoints}
 
-%% ------------------------------------------------------------------------ %%
-%
-%  ABSTRACT and PLAIN LANGUAGE SUMMARY
-%
-% A good Abstract will begin with a short description of the problem
-% being addressed, briefly describe the new data or analyses, then
-% briefly states the main conclusion(s) and how they are supported and
-% uncertainties.
-
-% The Plain Language Summary should be written for a broad audience,
-% including journalists and the science-interested public, that will not have 
-% a background in your field.
-%
-% A Plain Language Summary is required in GRL, JGR: Planets, JGR: Biogeosciences,
-% JGR: Oceans, G-Cubed, Reviews of Geophysics, and JAMES.
-% see http://sharingscience.agu.org/creating-plain-language-summary/)
-%
-%% ------------------------------------------------------------------------ %%
-
-%% \begin{abstract} starts the second page
-
 \begin{abstract}
-Apparent polar wander paths (APWPs) synthesized from paleomagnetic poles provide the most direct data for reconstructing past paleogeography and plate motions for times earlier than ca. 200 Ma. In this contribution, we describe a new method for APWP synthesis that extends the paleomagnetic Euler pole analysis of \citeA{Gordon1984a} by placing it within the framework of a Bayesian inverse problem. This approach allows uncertainties in both pole position and age to be incorporated into the synthesis---uncertainties that are often ignored in standard treatments. The paleomagnetic Euler poles resulting from the inversions provide estimates for full-vector plate motion (in both latitude and longitude) and associated uncertainty. The method allows for inverting for one or more Euler poles with the timing of changepoints from one Euler pole to another being solved as part of the inversion. In addition, the method allows the incorporation of true polar wander rotations on top of Euler rotations, thus providing an avenue for probabilistic partitioning of absolute plate motions and true polar wander based on paleomagnetic poles. We show several example inversions on simple synthetic data to demonstrate the capabilities of the method. We illustrate application of the method to the Cenozoic database of Australia paleomagnetic poles which can be compared to independent plate reconstructions developed using seafloor data. A two-Euler pole inversion for the Cenozoic Australia record recovers the northward acceleration of Australia in the Eocene with rates that are consistent with plate reconstructions. We also apply the method to constrain rapid rates of motion for cratonic North America associated with the Keweenawan Track of late Mesoproterozoic paleomagnetic poles. The application of Markov chain Monte Carlo methods to estimate paleomagnetic Euler poles can open new directions in quantitative paleogeography.
+Apparent polar wander paths (APWPs) synthesized from paleomagnetic poles provide the most direct data for reconstructing past paleogeography and plate motions for times earlier than ca. 200 Ma. In this contribution, we describe a new method for APWP synthesis that extends the paleomagnetic Euler pole analysis of \citeA{Gordon1984a} by placing it within the framework of a Bayesian inverse problem. This approach incorporates uncertainties in pole positions and age that are often ignored in standard treatments. The paleomagnetic Euler poles resulting from the inversions provide estimates for full-vector plate motion (both latitude and longitude) and associated uncertainty. The method allows for inverting for one or more Euler poles with the timing of changepoints being solved as part of the inversion. In addition, the method allows the incorporation of true polar wander rotations, thus providing an avenue for probabilistic partitioning of plate tectonic motion and true polar wander based on paleomagnetic poles. We show example inversions on synthetic data to demonstrate the method's capabilities. We illustrate application of the method to Cenozoic Australia paleomagnetic poles which can be compared to independent plate reconstructions. A two-Euler pole inversion for the Australian record recovers northward acceleration of Australia in the Eocene with rates that are consistent with plate reconstructions. We also apply the method to constrain rapid rates of motion for cratonic North America associated with the Keweenawan Track of late Mesoproterozoic paleomagnetic poles. The application of Markov chain Monte Carlo methods to estimate paleomagnetic Euler poles can open new directions in quantitative paleogeography.
 \end{abstract}
 
 \section*{Plain Language Summary}
-Movement of Earth's tectonic plates results in large changes in continent positions over time known as paleogeography. Reconstructing paleogeography is central for understanding long term changes to Earth's surface and interior. Ocean floor data are very useful for determining these motions, but only exist for the most recent 4$\%$ of Earth's history. For older times, we use magnetic directions in rocks that shows positions relative to the north pole. These records are called paleomagnetic poles and plate motions result in progressions of paleomagnetic poles called paths. Earth scientists need ways to synthesize poles into paths. Ideally, such a synthesis uses uncertainties on pole positions and ages. We developed a new way to reconstruct plate motion from paleomagnetic poles using an approach called Bayesian inversion. We apply the method to pretend data to illustrate its capabilities. We then apply the method to real data such as that from Australia over the past 60 million years. This analysis shows change in the continent's position and the rate of its motion that is similar to approaches that rely on ocean floor data. For older times, the method can help reconstruct positions and provide estimates of plate motion rates and associated uncertainty. 
+Movement of Earth's tectonic plates results in large changes in continent positions over time known as paleogeography. Reconstructing paleogeography is central for understanding long term changes to Earth's surface and interior. Ocean floor data are very useful for determining these motions, but only exist for the most recent 4$\%$ of Earth's history. For older times, we use magnetic directions in rocks that show positions relative to the north pole. These records are called paleomagnetic poles and plate motions result in progressions of paleomagnetic poles called paths. Earth scientists need ways to synthesize poles into paths. Ideally, such a synthesis uses uncertainties on pole positions and ages. We developed a new way to reconstruct plate motion from paleomagnetic poles using an approach called Bayesian inversion. We apply the method to pretend data to illustrate its capabilities. We then apply the method to real data such as that from Australia over the past 60 million years. This analysis shows change in the continent's position and the rate of its motion that is similar to approaches that rely on ocean floor data. For older times, the method can help reconstruct positions and provide estimates of plate motion rates and associated uncertainty. 
 
-
-
-%% ------------------------------------------------------------------------ %%
-%
-%  TEXT
-%
-%% ------------------------------------------------------------------------ %%
 
 \section*{Introduction}
 
@@ -303,9 +160,11 @@ In order to proceed with a Bayesian description of the problem, every parameter 
 
 The simplest probability distribution on a sphere is the spherical uniform distribution. It has a probability density given by
 \begin{equation}
-  \rho_U(\phi, \psi) = \frac{1}{4 \pi},
+  \rho_U(\phi, \psi) = \frac{1}{4 \pi} \cos \psi 
+\ or \
+  \rho_U(\hat{\mathbf{x}}) = \frac{1}{4 \pi}
 \end{equation}
-where $\rho_U$ is the probability density, $\phi$ is the longitude, and $\psi$ is the latitude (we will also refer to the Cartesian unit vector $\hat{\mathbf{x}}$ as a concise representation of $\phi$ and $\psi$). Non-uniform distributions on a sphere reduce to the uniform distribution in some limit (i.e. the Fisher distribution as the precision parameter goes to zero). We use the uniform distribution when we want to specify an uninformative prior distribution for directional parameters.
+where $\rho_U$ is the probability density, $\phi$ is the longitude, and $\psi$ is the latitude (we refer to the Cartesian unit vector $\hat{\mathbf{x}}$ as a concise representation of $\phi$ and $\psi$). Non-uniform distributions on a sphere reduce to the uniform distribution in some limit (i.e. the Fisher distribution as the precision parameter goes to zero). We use the uniform distribution when we want to specify an uninformative prior distribution for directional parameters.
 
 \subsubsection*{Fisher distribution}
 The Fisher distribution (also called the von Mises-Fisher distribution) is the analogue of a 2D normal distribution on a sphere (Fig. \ref{fig:distributions}). The probability density $\rho_F$ at a point $\hat{\mathbf{x}}$ is given by
@@ -407,7 +266,7 @@ which has higher probability density at lower values, and falls off exponentiall
 \begin{figure*}
 \centering
 \includegraphics[width=0.9\textwidth]{fig_euler_pole_prior.pdf}
-\caption[Informative prior distributions for Euler poles]{Informative prior distributions for Euler poles. (a) Prior probabilities for rotation rates. The histogram is the angular rotation rate from one thousand samples from the surface of Earth, using the NNR-MORVEL56 model. A fit to this sample set with an exponential distribution yields a scale parameter of $\lambda \approx 2.5$. We also show the distribution for $\lambda = 1.0$, which imposes less regularization on the rate as a less restrictive prior distribution, and a uniform $U(0,4)$ distribution between 0 and 4\textdegree/Myr, which specifies no preference for slower speeds if set as the prior probability. (b) Prior probability density for the position of the Euler poles, with the north pole as the site latitude and longitude.  We again sampled one thousand points on Earth's surface, calculating the angular distance between that point and the Euler pole for its plate.  If we model the probability distribution as being drawn from a Watson distribution, these angular distances correspond to colatitudes, where the pole is the sampled point.  Fitting the resulting angular distribution to a Watson girdle distribution finds $\kappa_W \approx -0.7$. Since the Watson distribution is rotationally symmetric, longitudes do not contribute to the fit. For $\kappa_W \approx -0.7$ the probability density is roughly twice as large at the equator (90\textdegree$\;$from a plate) as at the pole (on top of the plate).}
+\caption[Informative prior distributions for Euler poles]{Informative prior distributions for Euler poles. (a) Prior probabilities for rotation rates. The histogram is the angular rotation rate from one thousand samples from the surface of Earth, using the NNR-MORVEL56 model. A fit to this sample set with an exponential distribution yields a scale parameter of $\lambda \approx 2.5$. We also show the distribution for $\lambda = 1.0$, which imposes less regularization on the rate as a less restrictive prior distribution, and a uniform $U(0,4)$ distribution between 0 and 4\textdegree/Myr, which specifies no preference for slower speeds if set as the prior probability. (b) Prior probability density for the position of the Euler poles, with the north pole as the site latitude and longitude.  We again sampled one thousand points on Earth's surface, calculating the angular distance between that point and the Euler pole for its plate.  If we model the probability distribution as being drawn from a Watson distribution, these angular distances correspond to colatitudes, where the pole is the sampled point.  Fitting the resulting angular distribution to a Watson girdle distribution finds $\kappa_W\approx-0.7$. Since the Watson distribution is rotationally symmetric, longitudes do not contribute to the fit. For $\kappa_W\approx-0.7$ the probability density is roughly twice as large at the equator (90\textdegree\ from a plate) as at the pole (on top of the plate).}
 \label{fig:euler_pole_prior}
 \end{figure*}
 
@@ -479,7 +338,7 @@ The results of the inversion are shown in Figure \ref{fig:synthetic_pep}. The Ba
 \begin{figure*}
 \centering
 \includegraphics[width=0.9\textwidth]{fig_synthetic_pep.png}
-\caption{Inversion for Euler poles from synthetic data. (A) Five paleomagnetic poles are generated during a net $100^\circ$ rotation about an Euler pole at $00^\circ$N, $000^\circ$E over 100 Myr, for a rotation rate of $1^\circ$/Myr. The blue distribution is the probability density of Euler pole positions recovered by MCMC inversion, and the blue arcs are 100 of the resulting synthetic APWPs (sampled from 50,000). The mesh used for density in all such plots in the paper is 1.8\textdegree$\;$x1.8\textdegree. To avoid further complicating the plot, the scale associated with the probability density for this (as well as for all other similar figures in the paper) is shown in a supplemental version of this figure. (B) Posterior probability density for the rotation rate of the Euler pole recovered by the inversion. The solid line shows the median of the distribution ($0.96^\circ$/Myr), and the dashed lines show the 95\% credible interval ($0.70^\circ-1.23^\circ$/Myr). (C) Paleomagnetic poles generated using two distinct Euler poles. The first Euler pole is located at $10^\circ$S, $000^\circ$E (blue star), and rotates at $1.5^\circ$/Myr for 60 Myr. The second Euler pole is located at $10^\circ$N, $300^\circ$E (red star), and rotates at $0.75^\circ$/Myr for 60 Myr. The blue and red distributions show the posterior estimate location of the first and second Euler poles (respectively) recovered by the MCMC inversion. The blue and red arcs are 100 of the synthetic APWPs. (D) Posterior probability density for the rotation rates of the Euler poles recovered by the inversion. The solid lines show the median values of the distributions ($\sim 1.45^\circ$/Myr and 0.76$^\circ$/Myr for Euler rotation 1 and 2), and the dashed lines show the 95\% credible intervals.}
+\caption{Inversion for Euler poles from synthetic data. (A) Five paleomagnetic poles are generated during a net $100^\circ$ rotation about an Euler pole at $00^\circ$N, $000^\circ$E over 100 Myr, for a rotation rate of $1^\circ$/Myr. The blue distribution is the probability density of Euler pole positions recovered by MCMC inversion, and the blue arcs are 100 of the resulting synthetic APWPs (sampled from 50,000). The color bar scale associated with the probability density is shown in a supporting information version of this figure (Fig. S3). Such supporting information figures are provided for every Euler pole position plot in the paper (Figs S3 to S6). (B) Posterior probability density for the rotation rate of the Euler pole recovered by the inversion. The solid line shows the median of the distribution ($0.96^\circ$/Myr), and the dashed lines show the 95\% credible interval ($0.70^\circ-1.23^\circ$/Myr). (C) Paleomagnetic poles generated using two distinct Euler poles. The first Euler pole is located at $10^\circ$S, $000^\circ$E (blue star), and rotates at $1.5^\circ$/Myr for 60 Myr. The second Euler pole is located at $10^\circ$N, $300^\circ$E (red star), and rotates at $0.75^\circ$/Myr for 60 Myr. The blue and red distributions show the posterior estimate location of the first and second Euler poles (respectively) recovered by the MCMC inversion. The blue and red arcs are 100 of the synthetic APWPs. (D) Posterior probability density for the rotation rates of the Euler poles recovered by the inversion. The solid lines show the median values of the distributions ($\sim1.45^\circ$/Myr and 0.76$^\circ$/Myr for Euler rotation 1 and 2), and the dashed lines show the 95\% credible intervals.}
 \label{fig:synthetic_pep}
 \end{figure*}
 
@@ -629,15 +488,18 @@ While the examples in this study highlight insights that can be gained through a
 
 It could be interpreted as an advantage of paleomagnetic Euler pole analysis that it utilizes a physical model of plate motions to inform an APWP shape that fits with our knowledge of plate motions. However, uncertainty remains regarding underlying assumptions including that Euler pole positions and associated plate motions are relatively stable over millions of years. A complexity here is that while data constrain the relative motion between plates to be relatively constant (e.g. \citeA{Muller2016a}), the motion of a plate relative to the spin axis can be the combined effect of multiple Euler poles in a plate circuit as well as true polar wander. Furthermore, the method also assumes that the timescale over which Euler pole positions themselves migrate are relatively rapid such that they can be approximated by instantaneous changepoints. Evaluating the validity of these assumptions is an area ripe for future research. There is the potential to apply paleomagnetic Euler pole inversion itself to gain insight into these uncertainties.
 
-An additional opportunity, comes from the method giving posterior distributions for pole ages. There is a long history of paleomagnetists comparing undated (or poorly dated) paleomagnetic poles with APWPs to gain insight on their age \cite{McCabe1984b, Hnatyshin2014a}. These methods typically rely on comparison between designated pole pairs or consider the reference APWP to not have uncertainty. In the Bayesian paleomagnetic Euler pole inversion method developed here, undated poles (Fig. \ref{fig:age_uncertainty_samples}) or poorly dated (Fig. \ref{fig:Keweenawan_Track_2}) poles can be incorporated into the analysis with the resulting posterior distribution age distribution providing an estimate of the age of magnetization including uncertainty. 
+An additional opportunity comes from the method giving posterior distributions for pole ages. There is a long history of paleomagnetists comparing undated (or poorly dated) paleomagnetic poles with APWPs to gain insight on their age \cite{McCabe1984b, Hnatyshin2014a}. These methods typically rely on comparison between designated pole pairs or consider the reference APWP to not have uncertainty. In the Bayesian paleomagnetic Euler pole inversion method developed here, undated poles (Fig. \ref{fig:age_uncertainty_samples}) or poorly dated (Fig. \ref{fig:Keweenawan_Track_2}) poles can be incorporated into the analysis with the resulting posterior distribution age distribution providing an estimate of the age of magnetization including uncertainty. 
 
 \section*{Conclusions}
 \label{sec:conclusions}
 
-We have extended the paleomagnetic Euler pole analysis of \citeA{Gordon1984a} by placing it within a Bayesian framework. As a Bayesian inverse problem, Markov chain Monte Carlo (MCMC) numerical methods can be used to obtain estimates of Euler pole positions and rates as constrained by paleomagnetic poles. Regularization of the inversions is not accomplished by smoothing parameters, but can instead be accomplished through prior probability distributions for the Euler pole parameters, which have clear physical interpretations. The approach enables uncertainties on both the positions and ages of paleomagnetic poles to be incorporated into the analysis. Multiple Euler poles can be included with the timing of changepoints between them being solved as part of the inversion. An advantage of this approach is that the paleomagnetic Euler poles provide an estimate for the total plate velocity including both latitudinal and relative longitudinal motion. The resulting posterior distributions from the inversions provide uncertainties for the model parameters -- including estimates of plate velocity. 
+We have extended the paleomagnetic Euler pole analysis of \citeA{Gordon1984a} by placing it within a Bayesian framework. As a Bayesian inverse problem, Markov chain Monte Carlo (MCMC) numerical methods can be used to obtain estimates of Euler pole positions and rates as constrained by paleomagnetic poles. Regularization of the inversions is not accomplished by smoothing parameters, but can instead be accomplished through prior probability distributions for the Euler pole parameters, which have clear physical interpretations. The approach enables uncertainties on both the positions and ages of paleomagnetic poles to be incorporated into the analysis. Multiple Euler poles can be included with the timing of changepoints between them being solved as part of the inversion. An advantage of this approach is that the paleomagnetic Euler poles provide an estimate for the total plate velocity including both latitudinal and relative longitudinal motion. The resulting posterior distributions from the inversions provide uncertainties for the model parameters -- including estimates of plate velocity.
+
+\section*{Open Research}
+The code implementing the analysis and developing the visualizations of this study are documented within Jupyter notebooks \cite{Kluyver2016a} that are available on Github ( \url{https://github.com/Swanson-Hysell-Group/Bayesian_PEP_inversion}) and Zenodo (\url{https://doi.org/10.5281/zenodo.7087844}). These notebooks utilize the functions within the bayesian$\_$pep library within the repository and data that are within the repository as well. The computational environment used for running these notebooks and conducting the analysis can be reproduced using the environment.yml file within the repository. Instructions associated with recreating this computational environment can be found in the README.md file within the repository. MCMC analysis was performed using PyMC \cite{Salvatier2016a}. Additional analysis was performed using the Python packages NumPy \cite{Harris2020a}, Scipy \cite{Virtanen2020a}, and PmagPy \cite{Tauxe2016a}. Figures were created using Matplotlib \cite{Hunter2007a} and Cartopy \cite{Met-Office2010a}.
 
 \acknowledgments
-This work was supported by National Science Foundation grants EAR-1246670 and EAR-1847277. We thank Bruce Buffett, David Evans, and Mike Tetley for useful discussions during development of the method. We thank Mat Domeier, Facu Sapienza, and other members of the CEED YC2.0 workshop for informative discussions during the final writing of the manuscript. We also acknowledge Bram Vaes for an insightful review that improved the manuscript as well as the useful comments of an anonymous reviewer. MCMC analysis was performed using PyMC \cite{Salvatier2016a}. Additional analysis was performed using the Python packages NumPy \cite{Harris2020a}, Scipy \cite{Virtanen2020a}, and PmagPy \cite{Tauxe2016a}. Figures were created using Matplotlib \cite{Hunter2007a} and Cartopy \cite{Met-Office2010a}. The code implementing the analysis and developing the visualizations are documented within Jupyter notebooks \cite{Kluyver2016a} that are available on Github ( \url{https://github.com/Swanson-Hysell-Group/Bayesian_PEP_inversion}) and Zenodo (\textit{URL TO BE ADDED IN PROOFS}).
+This work was supported by National Science Foundation grants EAR-1246670 and EAR-1847277. We thank Bruce Buffett, David Evans, and Mike Tetley for useful discussions during development of the method. We thank Mat Domeier, Facu Sapienza, Leandro Gallo, and other members of the CEED YC2.0 workshop for informative discussions during the writing of the manuscript. These interactions were supported by a grant from the Peder Sather Center for Advanced Study. We also acknowledge Bram Vaes for an insightful review that improved the manuscript as well as the useful comments of an anonymous reviewer. 
 \clearpage
 
 
