@@ -4,7 +4,7 @@
 \usepackage[inline]{trackchanges} %for better track changes. finalnew option will compile document with changes incorporated.
 \usepackage{soul}
 \usepackage{amsmath}
-\linenumbers
+%\linenumbers
 
 \draftfalse
 
@@ -21,6 +21,11 @@
 
 \correspondingauthor{Nicholas L. Swanson-Hysell}{swanson-hysell@berkeley.edu}
 
+\vspace{0.5 in}
+\noindent This paper was published as:
+
+\noindent Rose, I. R., Zhang, Y., and Swanson-Hysell, N. L. (2022). Bayesian paleomagnetic Euler pole inversion for paleogeographic reconstruction and analysis. Journal  Geophysical Research: Solid Earth, 127, e2021JB023890. https://doi.org/10.1029/2021JB023890
+
 \begin{keypoints}
 \item Paleomagnetic Euler pole analysis can be implemented as a Bayesian inverse problem that incorporates uncertainty on pole positions and ages
 \item This approach provides estimates of absolute plate rates with uncertainties and can solve for the timing of Euler pole changepoints
@@ -35,7 +40,7 @@ Apparent polar wander paths (APWPs) synthesized from paleomagnetic poles provide
 Movement of Earth's tectonic plates results in large changes in continent positions over time known as paleogeography. Reconstructing paleogeography is central for understanding long term changes to Earth's surface and interior. Ocean floor data are very useful for determining these motions, but only exist for the most recent 4$\%$ of Earth's history. For older times, we use magnetic directions in rocks that show positions relative to the north pole. These records are called paleomagnetic poles and plate motions result in progressions of paleomagnetic poles called paths. Earth scientists need ways to synthesize poles into paths. Ideally, such a synthesis uses uncertainties on pole positions and ages. We developed a new way to reconstruct plate motion from paleomagnetic poles using an approach called Bayesian inversion. We apply the method to pretend data to illustrate its capabilities. We then apply the method to real data such as that from Australia over the past 60 million years. This analysis shows change in the continent's position and the rate of its motion that is similar to approaches that rely on ocean floor data. For older times, the method can help reconstruct positions and provide estimates of plate motion rates and associated uncertainty. 
 
 
-\section*{Introduction}
+\section{Introduction}
 
 Plate tectonics is the differential motion of near-rigid blocks of lithosphere across the surface of Earth, separated by relatively narrow regions of deformation in spreading centers, transform faults, and subduction zones. The relative rigidity of plates means that the motion of most of Earth's surface can be described by a set of Euler poles which specify the position (in latitude and longitude) of a rotation axis and a rate of rotation about this axis for a given plate \cite<cf.>{Cox2009a}. Individual points on a plate undergoing rigid rotation are described by small circle paths (Fig. \ref{fig:pep}).
 
@@ -58,37 +63,37 @@ In this contribution, we extend paleomagnetic Euler pole analysis by placing it 
 
 In the sections below, we first review different approaches that have been applied to synthesize and interpret APWPs. We then describe the formalism of Bayesian inversions and Markov chain Monte Carlo methods that we will apply. We then describe the statistical model which we will be inverting and demonstrate the inversion of several synthetic data sets. Finally, we show case studies where we apply the method to paleomagnetic poles in order to develop estimates of paleomagnetic Euler poles and associated plate motion.
 
-\section*{Interpretation of apparent polar wander paths}
+\section{Interpretation of apparent polar wander paths}
 
 A sequence of paleomagnetic poles from the same continental block can be synthesized into an APWP, which can then be used to develop plate tectonic reconstructions and models of plate motion with respect to Earth's spin axis through time. Interpretation of these paths becomes difficult in the case of limited, uncertain, or conflicting data, and when the ages of paleomagnetic poles are poorly known. A number of approaches to developing APWPs have been developed, which we briefly review here.
 
-\subsection*{Latitudinal drift}
+\subsection{Latitudinal drift}
 A paleomagnetic pole provides constraints on the paleolatitude and orientation of a lithospheric block. However, due to the rotational symmetry of Earth's time-averaged geocentric axial dipole magnetic field, paleomagnetic poles do not directly constrain absolute paleolongitude \cite{Butler1992a}. The simplest analysis of an APWP is to compare the paleolatitudes implied by successive poles for a point on a respective block. The difference in paleolatitudes gives a minimum angular distance over which the block has traveled. When this distance is compared to the age difference between the poles, such a comparison establishes a rate of latitudinal motion.
 
 It is possible to estimate confidence bounds on the rate of latitudinal drift through bootstrap resampling \cite<e.g.>{Tarduno1990b} or by taking a Monte Carlo approach. \citeA{Swanson-Hysell2014b} developed a Monte Carlo sampling method and applied the method to a pair of poles from the Proterozoic Midcontinent Rift of North America to estimate the range of implied latitudinal drift. They also sampled from the uncertainties of radiometric dates associated with the poles, assuming Gaussian distributions, in order to incorporate age uncertainties into the analysis. With samples of pole position and ages, they were able to estimate the 95\% confidence estimates on the rate of latitudinal drift.
 
 Whether using point estimates of the latitudinal drift rate or using Monte Carlo estimates, the latitudinal drift interpretation of APWPs remains limited as it represents a minimum estimate of total plate motion. It does not resolve longitudinal drift rate, nor does it naturally extend to APWPs with more than two poles, especially if two coeval poles are not in agreement, as it requires the selection of pole pairs.
 
-\subsection*{Spherical splines}
+\subsection{Spherical splines}
 When considering APWPs with many poles, it becomes more difficult to perform latitudinal comparisons between pairs of poles. It is not always clear which pairs of poles to compare in cases where there are many overlapping paleomagnetic poles that have variable uncertainties associated with their positions and ages.
 
 One approach to synthesize such data is to fit a spline through the set of paleomagnetic poles, constraining the path to lie on the surface of a sphere. This approach was pioneered by \citeA{Torsvik1992a} using the spherical spline algorithm developed by \citeA{Jupp1987a}. This approach has the advantage of allowing the paleomagnetic poles to be weighted by their spatial uncertainties. The uncertainty assigned to a paleomagnetic pole can be the 95\% confidence interval on the pole position, but it can also be augmented by various quality screening factors, such as the quality (``Q'') factor of \citeA{Van-der-Voo1990a} \cite{Torsvik1992a}. Even with the weighting of the paleomagnetic poles by uncertainty, there can be unrealistic loops in the APWP generated by the spline fit. To combat this behavior, the spline can also be computed under tension which penalizes curvature and produces a smoother path \cite{Torsvik1996a}.
 
 The spherical spline approach to interpreting APWPs has attractive features. It produces a smooth path through the data that can incorporate spatial uncertainties, and may be efficiently computed. However, it does have some drawbacks. It is not easy to determine the appropriate uncertainty weighting and spline tension parameters for the fit, and what effect those choices have on the result. Furthermore, the resulting fit does not have an uncertainty with a physically interpretable meaning \cite{Torsvik1996a}. It also does not have a simple way of incorporating age uncertainties of the paleomagnetic poles. Finally, by their nature, splines do not readily represent the sharp hairpin cusps that characterize abrupt shifts in motion that plates sometimes undergo \cite{Irving1972a, Gordon1984a, Torsvik2012a}.
 
-\subsection*{Running means}
+\subsection{Running means}
 
 An alternative method for developing APWPs is to perform a running Fisher mean on the poles with a moving window through time \cite{Irving1977a, Van-der-Voo2001a, Torsvik2008a}. In such an analysis, paleomagnetic poles in a compilation are averaged with a defined window duration (typically 10-30 Myr) that controls the amount of smoothing. Like spherical splines, the running mean approach has the ability to effectively damp the effect of outlier poles that could lead to spurious motion in the APWP if there are sufficient data. \citeA{Torsvik2008a} also investigated the effects of combining running means with spherical splines, by first computing a set of mean poles and then fitting a spline through those means. The simplicity of using the running mean approach to develop an APWP, as well as its ability to suppress potentially spurious poles, has led to it being widely adopted.
 
 While it is a straightforward approach with advantages for synthesizing paleomagnetic poles, the running mean approach shares many of the drawbacks of the spline approach. As with the spherical spline method, age uncertainties on the poles are not incorporated, nor are the uncertainties in pole positions as typically implemented. It is not obvious how to best choose the window duration, and different window durations are likely appropriate for different data sets. It is also unclear how to interpret the resulting uncertainties in the path that are reported as a Fisher A$_{95}$ ellipse of the mean of the poles as the poles need not be coming from a Fisher distribution particularly if there is ongoing plate motion. A recent study discussed the advantage that could be gained by calculating APWPs from site level data (virtual geomagnetic poles) rather than from study level mean paleomagnetic poles \cite{Vaes2022a}. This work highlighted how such an approach could ameliorate the disadvantage of typical running mean approaches of giving equal weight to study level poles which themselves comprise varying numbers of site level virtual geomagnetic poles.
 
-\subsection*{Paleomagnetic Euler poles}
+\subsection{Paleomagnetic Euler poles}
 The idea of fitting small circles to paleomagnetic data to gain insight into plate motions was first described by \citeA{Francheteau1969a}. The center of such a circle on a sphere is the pole of rotation which was termed a paleomagnetic Euler pole by \citeA{Gordon1984a} who developed a method to invert for the position of such poles. The approach builds on the recognition that plate motions can often be approximated by finite rotations around Euler poles which can potentially be steady for millions or tens of millions of years. As a result, an arcuate APWP of a plate can be described by Euler rotations, which produce small circle paths on Earth's surface if the Euler pole remains in a relative constant position (Fig. \ref{fig:pep}). Since the analysis solves for the Euler pole that produces a given small circle, this approach allows for an estimate of the full motion of a given plate, including the total plate speed (instead of just the latitudinal component of the speed). Effectively, the analysis utilizes both the change in plate orientation and latitude information embedded within paleomagnetic poles to estimate both latitudinal and longitudinal motion as succinctly specified by Euler pole parameters.
 
 However, paleomagnetic Euler pole analysis has many of the same deficiencies that spline fits and running means have---it is not easy to compute uncertainties, especially in the presence of unknown ages of poles. Furthermore, one has the additional challenge and related uncertainty of deciding how many paleomagnetic Euler poles to include for a given sequence of paleomagnetic poles. In most treatments, this number of stage poles is subject to researcher choice (however, see theoretical progress in this regard by \citeA{Gallo2022a}). In this contribution, we develop a Bayesian statistical approach to paleomagnetic Euler pole analysis which attempts to address some of these deficiencies.
 
-\section*{Bayesian inversion}
-\subsection*{A general description of inverse problems}
+\section{Bayesian inversion}
+\subsection{A general description of inverse problems}
 
 The central question motivating inverse problems is ``How probable is a particular model, given my observations?''. We represent observations by the data vector $\mathbf{d}$, and a model by the vector of model parameters $\mathbf{m}$, so the above question can be expressed as the function $P(\mathbf{m} \vert \mathbf{d})$ (the probability of the model given the data). Traditional frequentist approaches to an inverse problem often proceed by maximizing the likelihood function, defined by the probability of the data given a particular model \cite<e.g.>{Aster2005a}:
 \begin{equation}
@@ -116,7 +121,7 @@ equivalent to the least squares solution \cite{Aster2005a}.
 
 A standard maximum likelihood fit will frequently overfit the observations, resulting in unrealistic solutions. In the context of APWPs, these overfit solutions may pass through every paleomagnetic pole, including less reliable ones, resulting in loopy or jerky paths. In order to address such overfitting, some form of regularization is usually included in the solution of the inverse problem, such as penalizing the magnitude or curvature of the solution. Both the running-mean and the spline under tension approaches to APWPs are forms of regularization on the problem.
 
-\subsection*{Bayesian approach}
+\subsection{Bayesian approach}
 
 The Bayesian approach to inverse problems takes a different strategy from the frequentist one. Rather than finding a model with parameters that maximize the likelihood, it treats the underlying model as a set of random variables with individual probability distributions. The probability distribution of the model given the data ($P(\mathbf{m} \vert \mathbf{d})$) is then found by an application of Bayes theorem \cite<cf.>{Sivia2006a}:
 \begin{equation}
@@ -140,13 +145,13 @@ is known as the prior probability of the model. In the case for Euler pole and/o
 In this case, the prior probability distributions reflect the state of our knowledge and beliefs of the values of the Euler rotation axes and rotation rates prior to the consideration of data. It allows us to incorporate theoretically or empirically derived constraints that are not otherwise included in the forward model. In contrast with the classical statistical approach of regularization, the Bayesian inverse problem can (in effect) regularize the problem by making
 choices of probability distributions that have less probability density in parameter space with less realistic values \cite<e.g.>{Minson2013a, Sambridge2013a}.
 
-\subsection*{Markov chain Monte Carlo methods}
+\subsection{Markov chain Monte Carlo methods}
 
 For complex models, it is usually impossible to calculate the posterior probability distribution in Equation~\ref{eq:bayes} directly \cite{Davidson-Pilon2015a}. It is much more tractable to generate a Markov chain which, upon convergence, generates samples from the desired posterior distribution \cite{Gelman2013a}. This approach defines a class of methods known as Markov chain Monte Carlo (MCMC) methods. 
 
 In comparison with drawing Monte Carlo resamples from random variables independently, Markov chain Monte Carlo resampling generates a sequence of samples where the current value for each variable is dependent on its prior value. This approach allows for more efficient sampling of probability distributions with sampling that converges towards higher posterior probabilities. For an introduction to MCMC methods, the interested reader could refer to \citeA{Gelman1996a}, \citeA{Sambridge2013a}, and \citeA{Davidson-Pilon2015a}. A number of high-quality open source software packages for implementing MCMC models exist, including WinBUGS \cite{Lunn2000a}, PyMC \cite{Salvatier2016a}, and Stan \cite{Carpenter2017a}. We make extensive use of PyMC in this work.
 
-\subsection*{Distributions on a sphere}
+\subsection{Distributions on a sphere}
 
 In order to proceed with a Bayesian description of the problem, every parameter in the model needs to be described by some statistical distribution that determines the probability that the parameter takes a specific value. Parameters like pole ages can be described by 1D probability distributions (such as uniform or normal distributions), whereas Euler pole locations are described by 2D distributions of directional data on the surface of a sphere. We review several of these distributions here. For a comprehensive discussion of spherical probability distributions, see \citeA{Fisher1987b}. Plots of the following distributions (uniform, Fisher, and Watson), as well as samples drawn from them, are shown in Figure \ref{fig:distributions}. 
 
@@ -203,9 +208,9 @@ The normalization factor is given by
 \end{equation}
 where ${}_1 F_1()$ is Kummer's confluent hypergeometric function, which is available in most software libraries of special mathematical functions. As with the Fisher distribution, when $\kappa_W$ goes to zero,  the Watson distribution is equivalent to the spherical uniform distribution.
 
-\section*{A model for paleomagnetic Euler pole inversion}
+\section{A model for paleomagnetic Euler pole inversion}
 \label{sec:model}
-\subsection*{Forward model}
+\subsection{Forward model}
 \label{sec:forward_model}
 A forward model describes how we generate predicted observations given a set of model parameters (Equation~\ref{eq:forward}). The forward model for paleomagnetic Euler pole analysis in this study is essentially unchanged from that of \citeA{Gordon1984a}. We will consider three overall scenarios of plate motions (and hence paleomagnetic pole motions). The first is that plate motion is the result of plate tectonic motion about an Euler pole or a series of Euler poles. Each Euler pole has three parameters: a latitude, a longitude, and a rotation rate. In a model with multiple Euler poles, we also must specify the ages where one Euler pole switches to the next as an additional unknown variable. In the context of parameter inversion, these ages are often known as ``changepoints.'' For plate tectonic motions, the motion can be along any plane intersecting the sphere such that they are small circles. The second scenario we will consider is one wherein the sole cause of the motion of paleomagnetic poles is true polar wander in which case motion is restricted to be along a great circle path coaxial to the axis of minimum inertia \cite{Creveling2012a}. In such a model, three parameters exist: a latitude and a longitude of the true polar wander rotation axis and a rotation rate.  A third scenario is that plate tectonic and true polar wander rotations are occurring concurrently leading to an observed paleomagnetic pole path. 
 
@@ -232,7 +237,7 @@ With the axes and rates for such spherical rotations defined, one can calculate 
 
 Finite rotations can be performed by constructing Euler angle rotation matrices \cite<cf.>{Goldstein1965a}.  We generate synthetic paleomagnetic pole positions from the forward model by stringing together finite rotations through the stage poles until the age of the observed paleomagnetic pole is reached. These positions can then be compared to the observed paleomagnetic poles in a given dataset.
 
-\subsection*{Choice of prior distributions}
+\subsection{Choice of prior distributions}
 \label{sec:priors}
 
 Bayesian analysis requires us to specify prior probability distributions for each of the model parameters in the inverse problem. These distributions reflect our state of knowledge about the values of the parameters before we begin, and allow us the option of incorporating information otherwise not captured by the model. To avoid biasing the results of the model towards a specific posterior distribution, we usually try to choose prior distributions that are as uninformative as possible. Depending upon the context, and the type of parameter, that choice may vary. The central parameters in the paleomagnetic Euler pole problem are the Euler pole positions, the Euler pole magnitudes, the changepoints, the starting point, and the paleomagnetic pole ages, which we treat in turn. We use the notation $x \sim y$ to indicate that the parameter $x$ is drawn from distribution $y$.
@@ -312,7 +317,7 @@ To summarize our choices for prior distributions:
 \item Paleomagnetic pole ages: normal or uniform distribution, depending on the type of age control for the geologic unit from which the pole was obtained.
 \end{itemize}
 
-\subsection*{Likelihood}
+\subsection{Likelihood}
 \label{sec:likelihood}
 In addition to the choice of prior distributions, we need a statistical description of the observations. This description will allow us to calculate the likelihood function, which, when combined with the prior distributions, allows us to evaluate Bayes' theorem (Equation~\ref{eq:propbayes}).
 
@@ -322,12 +327,12 @@ P(\mathbf{d} \vert \mathbf{m}) = \displaystyle\prod_{i=1}^n \frac{1}{C_{F,i}} \e
 \label{eq:model_likelihood}
 \end{equation}
 
-\section*{Example inversions}
+\section{Example inversions}
 \label{sec:example_inversion}
 
 Before proceeding with inversions for paleomagnetic Euler poles using real paleomagnetic data, it is useful to consider a few examples of inversions for idealized synthetic datasets. We have specified the forward model described above using the package PyMC \cite{Salvatier2016a} which enables us to perform the inversion. Within PyMC, we are able to specify custom probability distributions enabling the directional data distributions illustrated in Figure \ref{fig:distributions} to be implemented. The Markov chain Monte Carlo (MCMC) analysis uses the Metropolis–Hastings algorithm for sampling as it can be applied to custom probability distributions in contrast with other sampling algorithms within PyMC. Our code for the inversions has an open-source GPL license and is available on Github (\url{https://github.com/Swanson-Hysell-Group/Bayesian_PEP_inversion}) and archived on Zenodo ( \textit{we will archive the Github repository on Zenodo at the time of proofs following any revisions which provides long-term assurance of archival and will add the link here}).
 
-\subsection*{One Euler rotation}
+\subsection{One Euler rotation}
 \label{sec:one_stage_pole}
 We begin by trying to recover the Euler pole for a single rotation. We generate an idealized synthetic APWP of four poles by starting from a pole at $19^\circ$ N, $024^\circ$ E, and rotating around an Euler pole at $00^\circ$ N, $000^\circ$ E for 100 Myr at a rate of $1^\circ$/Myr. We produce paleomagnetic poles at 100 Ma, 75 Ma, 50 Ma, and 25 Ma, and prescribe A$_{95}$ of $4^\circ$ to each pole (where A$_{95}$ indicates the 95\% angular confidence for the pole position).
 
@@ -342,7 +347,7 @@ The results of the inversion are shown in Figure \ref{fig:synthetic_pep}. The Ba
 \label{fig:synthetic_pep}
 \end{figure*}
 
-\subsection*{Two Euler rotations}
+\subsection{Two Euler rotations}
 \label{sec:two_stage_poles}
 We next consider an inversion for an APWP with two stage poles. Unlike the previous example where we inverted for a single Euler pole, this inversion also requires a changepoint. We generate nine idealized paleomagnetic poles with A$_{95}$ of $4^\circ$ for each from a starting point at $5^\circ$S, $030^\circ$E. The first rotation is around an Euler pole at $10^\circ$S, $000^\circ$E, and rotates at $1.5^\circ$/Myr for 60 Myr. The second rotation is around an Euler pole at $10^\circ$N, $300^\circ$E and rotates at a rate of $0.75^\circ$/Myr for the same amount of time. The synthetic poles associated with this two stage model are shown in Figure \ref{fig:synthetic_pep}. 
 
@@ -352,7 +357,7 @@ The inversion successfully recovers the Euler pole rotation rates with posterior
 
 Overall, this example demonstrates that the inversion framework can resolve APWPs with more than one stage pole and provides posterior probability distributions on the Euler rotation changepoint in addition to the multiple Euler poles positions and rates (Fig. \ref{fig:synthetic_pep}C,D).
 
-\subsection*{Incorporating age uncertainty}
+\subsection{Incorporating age uncertainty}
 \label{sec:age_uncertainty}
 A benefit of the Bayesian approach to inverse problems is its generality. As long as some effect can be described statistically and incorporated into our forward model, we can include it in the inverse problem. As a result, we are able to include uncertainties on the ages of paleomagnetic poles. Assigning a fixed single age to paleomagnetic poles can bias an analysis when the age of a pole is not precisely known. The inversion framework enables the varying certainty on pole ages to be incorporated into the analysis. To demonstrate this capability, we use a similar test case as in the one Euler pole inversion with the ages of synthetic poles being adjusted to span from 140 Ma to 40 Ma (poles of 140, 115, 90, 65, and 40 Ma) (Fig. \ref{fig:age_uncertainty_samples}A), but assign prior distributions for the ages of the poles. For the first and last poles, we assume they are radiometrically dated with standard deviations of 5 Myr. However, we assume that the middle three poles have no age control, except that their ages are constrained to be between the first and last poles. We thus assign Gaussian prior distributions to the first and last poles and uniform prior distributions to the middle three (Fig. \ref{fig:age_uncertainty_samples}B). Despite this uninformative prior distribution on the age of the middle three poles, the inversion successfully places the estimated distributions of ages of the middle three poles to be centered at \textit{ca.} 115 Ma, \textit{ca.} 90 Ma,  and \textit{ca.} 65 Ma as can be seen in their posterior age distributions (Fig. \ref{fig:age_uncertainty_samples}D).
 
@@ -365,7 +370,7 @@ For real data, adding uncertainties to the ages of the poles enables us to prope
 \label{fig:age_uncertainty_samples}
 \end{figure*}
 
-\subsection*{Reporting the apparent polar wander path}
+\subsection{Reporting the apparent polar wander path}
 \label{sec:age_uncertainty}
 A difficulty with the Bayesian approach is that the credible interval of Euler pole posterior positions are not easy to report as they do not neatly correspond to a parametric statistical distribution. We visualize the solutions with spatial histograms for the Euler pole positions and by showing example inverted paths. A typical product that one is seeking with such an inversion is an apparent polar wander path reported as interpreted pole position at given intervals. An approach that can be taken is to calculate a number of predicted pole positions at a given time implied by inverted Euler pole models and then to calculate the Fisher mean of these inverted pole positions as was done in \citeA{Swanson-Hysell2019a}. This approach provides the mean pole position on the apparent polar wander path. We also wish to report the uncertainty on that estimated position. The spread in the position of these inverted pole positions has real meaning related to the certainty of the path position at a given time resulting from the Euler pole positions and rotation rates in the posterior distribution. The spread in pole positions can be approximated as a Fisher distribution from which the angle from the mean that contains 95$\%$ of the solutions ($\theta_{95}$) can be calculated:
 \begin{equation}
@@ -374,7 +379,7 @@ A difficulty with the Bayesian approach is that the credible interval of Euler p
 \end{equation}
 This angle is analogous to a 2$\sigma$ uncertainty in Gaussian statistics.  The pole positions typically are consistent with being drawn from a Fisher distribution such that reporting the 95$\%$ confidence of angular deviation can be appropriate, but note that the distributions are not necessarily Fisherian such that this can be a simplified approximation. Regardless, implied pole positions from these inversions are more tightly clustered than the inverted Euler pole positions themselves. This approach for summarizing an APWP is applied to Australia's Cenozoic path in the following section.
 
-\section*{Application to Australia's Cenozoic APWP}
+\section{Application to Australia's Cenozoic APWP}
 \label{sec:australia}
 
 \begin{sidewaystable}[]
@@ -389,7 +394,7 @@ Glenample Fm./Port Campbell Lst. & sedimentary & 77.2 & 303.5 & 3.9 & 30  & \cit
 Cosgrove leucitite lavas         & igneous     & 80.2 & 275.4 & 8.6 & 15  & \citeA{Hansma2018a}                & 16         & 15       & 17       & Ar-Ar dates with range assigned by \citeA{Hansma2018a}                        & uniform           \\
 Main Range Volcano               & igneous     & 76.6 & 271.6 & 6.1 & 25  & as in \citeA{Hansma2019a} & 23.45      & 20.2     & 26.7              & Ar-Ar dates from \citeA{Knesel2008a}                                          & uniform           \\
 Tweed Volcano                    & igneous     & 77.4 & 306.9 & 5.4 & 48  & as in \citeA{Hansma2019a} & 23.9       & 23.1     & 24.7              & Ar-Ar dates from \citeA{Knesel2008a}                                          & uniform           \\
-Pt. Addis Limestone              & sedimentary & 68.5 & 299.4 & 4.8 & 4.8 & \citeA{Idnurm1985a}                & 25.1       & 22.4     & 27.8     & Ar-Ar and biostratigraphic constraints from \citeA{Idnurm1985a, McLaren2009a} & uniform           \\
+Pt. Addis Limestone              & sedimentary & 68.5 & 299.4 & 4.8 & 4.8 & \citeA{Idnurm1985a}                & 25.1       & 22.4     & 27.8     & Ar-Ar and biostratigraphic constraints from \citeA{Idnurm1985a, McLaren2009b} & uniform           \\
 Springsure Volcano               & igneous     & 70.5 & 300.6 & 9.7 & 18  & \citeA{Hansma2019a}                & 28.1       & 27.8     & 28.4     & Ar-Ar date from \citeA{Cohen2013a}                                            & normal          \\
 Peak Range                       & igneous     & 64.6 & 291.8 & 8.8 & 29  & \citeA{Hansma2019a}                & 29.65      & 28.2     & 31.1     & Ar-Ar dates from \citeA{Cohen2013a}                                           & uniform           \\
 Hillsborough Volcano             & igneous     & 67.1 & 301.4 & 7.1 & 14  & \citeA{Hansma2019a}                & 33.6       & 33.1     & 34.1     & Ar-Ar date from \citeA{Cohen2013a}                                            & normal          \\
@@ -454,7 +459,7 @@ Notes: PEP: paleomagnetic Euler pole; PLon: pole longitude; PLat: pole latitude;
 
 It is intriguing that the inclusion of the \citeA{Doubrovine2012a} true polar wander correction in the \citeA{Torsvik2017a} model results in improved correspondence in the terms of pole longitude, but more of a discrepancy with the paleomagnetic poles and their inversion in terms of latitude (Figs. \ref{fig:Aus_Cenozoic_track} and \ref{fig:Aus_inverted_APWP}). While the conclusions that can be drawn in this regard are limited given the restriction of the analysis to Australia, such comparisons could be a fruitful future direction to use for comparisons between reference frames. Overall, the analysis highlights a broad agreement in the interpretation of kinematics that results from inversion of the Cenozoic paleomagnetic poles for Australia and that which results from seafloor-based plate motion models.
 
-\section*{Application to the Keweenawan Track}
+\section{Application to the Keweenawan Track}
 \label{sec:keweenawan}
 
 An impetus for the development of this Bayesian paleomagnetic Euler pole inversion method was to constrain the absolute rates of plate motion associated with the ca. 1109 to 1070 Ma Keweenawan Track of paleomagnetic poles from the Proterozoic continent of Laurentia \cite{Halls1982a, Swanson-Hysell2009a, Swanson-Hysell2019a}. These poles are associated with the rapid motion of Laurentia towards the equator leading up to the Grenvillian orogeny and the assembly of the supercontinent Rodinia \cite{Swanson-Hysell2021a}. While previous approaches had established estimates for the rate of latitudinal motion associated with the Keweenawan Track \cite{Davis1997a, Swanson-Hysell2014b}, this Bayesian inversion method was implemented in \citeA{Swanson-Hysell2019a} in order to constrain absolute rates (without providing the level of detail on the methodology that is elucidated in the present contribution). In addition to our goals of constraining absolute rates, this approach was particularly appropriate for the Keweenawan Track as it includes poles with quite disparate precision on their age constraints as some are constrained tightly by high-precision U-Pb dates \cite<e.g.>{Fairchild2017a} while others have looser stratigraphic constraints. A technical note related to the analysis in \citeA{Swanson-Hysell2019a} is that it used a version of the code written in PyMC2 (\citeA{Patil2010a}; \url{https://github.com/ian-r-rose/mcplates}). The PyMC project has migrated to PyMC3 (now known simply as PyMC) which is a total rewrite of the module \cite{Salvatier2016a} and necessitated our code to refactored into its present PyMC version (\url{https://github.com/Swanson-Hysell-Group/Bayesian_PEP_inversion}). These two versions of the code apply the same methodology and recover very similar solutions. One change that we adopted in this study is that we applied inclination shallowing corrections to the sedimentary paleomagnetic poles within the Keweenawan Track (i.e. the Nonesuch Formation and lower Freda Formation poles of \citeA{Henry1977a}) given how widespread inclination shallowing is for remanence held by detrital hematite. While more research is needed on these sedimentary rocks to quantify the degree of inclination shallowing, we take the approach of \citeA{Domeier2012a} in utilizing an assumed flattening factor of 0.6 given that sample-level data are not available. A ripe direction for future work would be to adopt a probabilistic framework for inclination shallowing correction rather than an assigned single value.
@@ -481,16 +486,16 @@ The pole path could be the result of a combination of true polar wander and diff
 
 The results of this Bayesian Euler pole inversion method can not only provide insights into geodynamic processes, but also provide geochronologic estimates on rock units that have poor or none radiometric age constraints. As our knowledge of paleomagnetic pole ages and their uncertainities are incorporated into the inversions, the more informative prior distributions that we implement for poles that have well-constrained radiometric dates (such as the normal distributions for many igneous units of the Keweenawan Track) can act as anchor points and result in more tightly constrained posterior distributions for ages of other poles that have less informative priors (such as the uniform distributions for some igneous and the sedimentary poles of the Keweenawan Track). As is illustrated in Figure \ref{fig:Keweenawan_Track_2}B, the poles whose ages could only be bracketed as uniform distributions in the prior end up having posterior age distributions with more constrained credible intervals. In this example, these ages estimated through paleomagnetic Euler pole inversion model give insight into the chronology of magmatism and basin development within the North American Midcontinent Rift. 
 
-\section*{Challenges and opportunities in the application of paleomagnetic Euler pole analysis}
+\section{Challenges and opportunities in the application of paleomagnetic Euler pole analysis}
 \label{sec:challenges_and_opportunities}
 
 While the examples in this study highlight insights that can be gained through applying paleomagnetic Euler pole analysis to segments of apparent polar wander paths, challenges remain in its broad application. One set of challenges relates to the resolving power of the method. For slow rates of motion, the position of inverted Euler poles are uncertain and it is difficult to resolve the timing of changepoints with confidence. However, this issue is more related to the precision of available constraints and is the case regardless of method. Of note is that the spread between resulting paths is much less than the spread of the posterior Euler pole position (as in the older Euler pole rotation in the Australia application; Fig. \ref{fig:Aus_Cenozoic_track}). Determining the number of change points to implement in an inversion is an additional challenge, and one that is also more difficult for slow motions or uncertain data. This issue is addressed theoretically in \citeA{Gallo2022a} who apply a frequentist approach to paleomagnetic Euler pole inversion and propose a graphical approach to evaluate for the optimal number of inverted Euler poles. The extension of such an approach beyond ideal synthetic data to noisier suites of paleomagnetic data as well as integration with our Bayesian inversion approach could prove fruitful. 
 
 It could be interpreted as an advantage of paleomagnetic Euler pole analysis that it utilizes a physical model of plate motions to inform an APWP shape that fits with our knowledge of plate motions. However, uncertainty remains regarding underlying assumptions including that Euler pole positions and associated plate motions are relatively stable over millions of years. A complexity here is that while data constrain the relative motion between plates to be relatively constant (e.g. \citeA{Muller2016a}), the motion of a plate relative to the spin axis can be the combined effect of multiple Euler poles in a plate circuit as well as true polar wander. Furthermore, the method also assumes that the timescale over which Euler pole positions themselves migrate are relatively rapid such that they can be approximated by instantaneous changepoints. Evaluating the validity of these assumptions is an area ripe for future research. There is the potential to apply paleomagnetic Euler pole inversion itself to gain insight into these uncertainties.
 
-An additional opportunity comes from the method giving posterior distributions for pole ages. There is a long history of paleomagnetists comparing undated (or poorly dated) paleomagnetic poles with APWPs to gain insight on their age \cite{McCabe1984b, Hnatyshin2014a}. These methods typically rely on comparison between designated pole pairs or consider the reference APWP to not have uncertainty. In the Bayesian paleomagnetic Euler pole inversion method developed here, undated poles (Fig. \ref{fig:age_uncertainty_samples}) or poorly dated (Fig. \ref{fig:Keweenawan_Track_2}) poles can be incorporated into the analysis with the resulting posterior distribution age distribution providing an estimate of the age of magnetization including uncertainty. 
+An additional opportunity comes from the method giving posterior distributions for pole ages. There is a long history of paleomagnetists comparing undated (or poorly dated) paleomagnetic poles with APWPs to gain insight on their age \cite{McCabe1984b, Hnatyshin2014a}. These methods typically rely on comparison between designated pole pairs or consider the reference APWP to not have uncertainty. In the Bayesian paleomagnetic Euler pole inversion method developed here, undated poles (Fig. \ref{fig:age_uncertainty_samples}) or poorly dated poles (Fig. \ref{fig:Keweenawan_Track_2}) can be incorporated into the analysis with the resulting posterior distribution age distribution providing an estimate of the age of magnetization including uncertainty. 
 
-\section*{Conclusions}
+\section{Conclusions}
 \label{sec:conclusions}
 
 We have extended the paleomagnetic Euler pole analysis of \citeA{Gordon1984a} by placing it within a Bayesian framework. As a Bayesian inverse problem, Markov chain Monte Carlo (MCMC) numerical methods can be used to obtain estimates of Euler pole positions and rates as constrained by paleomagnetic poles. Regularization of the inversions is not accomplished by smoothing parameters, but can instead be accomplished through prior probability distributions for the Euler pole parameters, which have clear physical interpretations. The approach enables uncertainties on both the positions and ages of paleomagnetic poles to be incorporated into the analysis. Multiple Euler poles can be included with the timing of changepoints between them being solved as part of the inversion. An advantage of this approach is that the paleomagnetic Euler poles provide an estimate for the total plate velocity including both latitudinal and relative longitudinal motion. The resulting posterior distributions from the inversions provide uncertainties for the model parameters -- including estimates of plate velocity.
